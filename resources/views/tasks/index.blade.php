@@ -56,13 +56,22 @@
                                         <td class="table-text">
                                             <div>{{ $task->name }}</div>
                                         </td>
+                                        <td class="table-text">
+                                            <div>{{ $task->text }}</div>
+                                        </td>
                                         <td>
                                             <form method="post" action="{{route('tasks.destroy', $task->id)}}">
                                                 {{csrf_field()}}
                                                 {{method_field('DELETE')}}
                                                 <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                             </form>
+                                            <form method="post" action="{{ route('tasks.edit', $task->id)}}">
+                                                {{csrf_field()}}
+                                                {{method_field('GET')}}
+                                                <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                                            </form>
                                         </td>
+                                    </tr>
                                     </tr>
                                 @endforeach
                                 </tbody>

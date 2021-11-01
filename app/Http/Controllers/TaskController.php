@@ -54,16 +54,6 @@ class TaskController extends Controller
         return redirect(route('tasks.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -71,9 +61,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($tasks)
     {
-        //
+
+        $this->authorize('edit', $tasks);
+        return view('tasks.edit', [
+            'tasks'=>$tasks,
+        ]);
     }
 
     /**
@@ -85,7 +79,17 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required|max:255',
+        ]);
+
+        Auth::user()->tasks()->update(
+            ['name'=>$request->name],
+            ['text'=>$request->text]
+
+        );
+
+        return redirect(route('tasks.index'));
     }
 
     /**
@@ -98,6 +102,7 @@ class TaskController extends Controller
     {
         $this->authorize('destroy', $tasks);
         $tasks->delete();
+
 
         return redirect(route('tasks.index'));
     }

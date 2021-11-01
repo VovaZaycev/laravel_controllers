@@ -56,9 +56,12 @@
                                         <td class="table-text">
                                             <div>{{ $task->name }}</div>
                                         </td>
-
                                         <td>
-                                            <!-- TODO: Кнопка Удалить -->
+                                            <form method="post" action="{{route('tasks.destroy', $task->id)}}">
+                                                {{csrf_field()}}
+                                                {{method_field('DELETE')}}
+                                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
